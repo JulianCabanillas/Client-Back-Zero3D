@@ -1,0 +1,42 @@
+# Entorno virtual
+env/
+*.pyc
+__pycache__
+*.db
+*.sqlite3
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+*.csv
+*.pot
+*.mo
+*.po
+
+# Configuraciones locales (si usas)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Carpetas generadas
+media/
+staticfiles/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
