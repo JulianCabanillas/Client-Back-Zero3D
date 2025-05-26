@@ -1,18 +1,17 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from django.shortcuts import render # type: ignore
+from django.contrib.auth import authenticate # type: ignore
+from django.views.decorators.csrf import csrf_exempt # type: ignore
+from rest_framework.decorators import api_view # type: ignore
+from rest_framework.response import Response # type: ignore
 from .models import Client
 from .serializers import ClientSerializer
 
-@csrf_exempt  # Solo para desarrollo (evita errores de CSRF)
+@csrf_exempt  # ---------------------> Solo desarrollo, evitamos err de CSRF
 @api_view(['POST'])
 def login_client(request):
+    print("Datos recibidos:", request.data)
     username = request.data.get('username')
     password = request.data.get('password')
-
-    # Busca el cliente por username y contraseña
     try:
         client = Client.objects.get(username=username, password=password)
         return Response({

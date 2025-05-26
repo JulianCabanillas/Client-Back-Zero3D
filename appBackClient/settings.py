@@ -126,9 +126,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = True  # Solo en desarrollo
-# O si quieres ser más seguro:
-# CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOW_ALL_ORIGINS = True  #--------------------------> Quitar opcion cuando cuando salgamos de desarrollo
+
+# CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]     ---> Mas seguridad...
 
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
