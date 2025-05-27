@@ -11,6 +11,6 @@ class Command(BaseCommand):
                 password='admin',
                 email='admin@example.com'
             )
-            self.stdout.write(self.style.SUCCESS('Superusuario creado'))
+            self.stdout.write(self.style.SUCCESS('Superusuario creado: username = admin, password = admin, email = admin@example.com'))
         else:
             self.stdout.write(self.style.WARNING('Superusuario ya existe'))
