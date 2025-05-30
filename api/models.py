@@ -1,5 +1,6 @@
 from django.db import models
 
+# Modelo de los tecnicos:
 class Technical(models.Model):
 	technical_id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=100)
@@ -8,6 +9,8 @@ class Technical(models.Model):
 	def __str__(self):
 		return self.name
 
+
+# Modelo de los clientes:
 class Client(models.Model):
     client_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=100, unique=True)
@@ -19,7 +22,7 @@ class Client(models.Model):
     def __str__(self):
         return f"Client {self.client_id}"
 
-
+# Modelo de los pedidos:
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
@@ -31,6 +34,7 @@ class Order(models.Model):
         return f"Order {self.order_id}"
 
 
+# Modelo de las impresoras:
 class Printer(models.Model):
     printer_id = models.AutoField(primary_key=True)
     description = models.TextField()
