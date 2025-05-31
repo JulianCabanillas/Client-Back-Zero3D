@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Llama al script para realizar espera hasta la preparacion de la BD:
-/wait-for.sh db:5432
+./wait-for.sh db:5432
 echo "Base de datos disponible"
 
 

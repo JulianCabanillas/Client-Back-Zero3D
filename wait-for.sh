@@ -28,6 +28,10 @@ fi
 
 echo "Esperando que $HOST:$PORT esté disponible..."
 
+# Damos 10 segundo para que la base de datos se monte correctamente 
+# si no DJANGO podria fallar:
+sleep 10
+
 # Bucle donde esperamos a que el puerto de la base de datos este disponible
 # para continuar con el script, con until no para hasta que realiza la accion:
 until nc -z "$HOST" "$PORT"; do
