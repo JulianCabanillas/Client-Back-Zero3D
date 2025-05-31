@@ -138,9 +138,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ##################################################
 # Seguridad con CORS para las conexiones a DJANGO:
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]     #---> Mas seguridad...
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000","http://localhost"]     #---> Mas seguridad...
 CORS_ALLOW_HEADERS = list(default_headers) + ["content-type",]
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000","http://localhost"]
 
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
