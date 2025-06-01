@@ -43,4 +43,3 @@ END
 
 # Aqui lanzamos para levantar el servidor que dara pie a Django:
 echo "Levantando servidor..."
-exec gunicorn appBackClient.wsgi:application --bind 0.0.0.0:8000
