@@ -1,26 +1,28 @@
 from .base import *
 
 # Utilizamos el archivo correspondiente para las variante del entorno:
-environ.Env.read_env(BASE_DIR / '.env.production')
+environ.Env.read_env( BASE_DIR / '.env.staging')
 
-# Aqui desactivamos la bandera para el debug (dev):
+# Aqui desactivamos la bandera para el debug (dev)
+#  y activamos la bandera de STAGING:
 DEBUG = False
+STAGING = True
 
 # Definicion de la llave:
-SECRET_KEY = env('SECRET_KEY', default='unsafe-placeholder-change-me')
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-dev-key')
 
 # Puertos permitidos para la conexion:
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['zero3d.com'])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["staging.zero3d.com"])
 
-# Defincion de la base de datos de produccion:
+# Defincion de la base de datos de staging:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'NAME': env('DB_NAME', default='zero3d_stage_db'),
+        'USER': env('DB_USER', default='admin'),
+        'PASSWORD': env('DB_PASSWORD', default='admin'),
+        'HOST': env('DB_HOST', default='db'),  
+        'PORT': env('DB_PORT', default='5432'),
     }
 }
 
@@ -44,4 +46,3 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # Incluir dominio en las listas internas de los navegadores:
 SECURE_HSTS_PRELOAD = True
-

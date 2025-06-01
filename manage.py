@@ -3,12 +3,15 @@
 import os
 import sys
 
+# Metodo ejecutor de DJango, metodo main:
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.development')
+
+    # Aqui definimos las settings que deben recoger segun el entorno:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.staging')
     try:
-        from django.core.management import execute_from_command_line
+        from django.core.management import execute_from_command_line # type: ignore
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "

@@ -8,8 +8,7 @@ echo "Base de datos disponible"
 echo "Ejecutando migraciones..."
 
 # Ejecutamos migraciones en Django
-# Creamos migraciones por si hay cambios en las bd (dev):
-python manage.py makemigrations 
+
 # Aplicamos las migraciones pertienentes:
 python manage.py migrate --noinput
 # Creacion del superUser para Django:
@@ -22,7 +21,7 @@ python << END
 import os
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "appBackClient.settings.development")  
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "appBackClient.settings.staging")  # Ajusta esto según tu proyecto
 django.setup()
 
 from api.models import Client
@@ -41,7 +40,7 @@ else:
     print("Cliente de ejemplo ya existe.")
 END
 
-
+python manage.py collectstatic --noinput --settings=appBackClient.settings.staging
 
 # Aqui lanzamos para levantar el servidor que dara pie a Django:
 echo "Levantando servidor..."

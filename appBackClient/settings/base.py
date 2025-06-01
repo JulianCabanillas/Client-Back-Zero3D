@@ -1,12 +1,15 @@
+from corsheaders.defaults import default_headers, default_methods 
 from pathlib import Path
-import os
 import environ
 
+
+# Archivo base para las configuraciones de DJango:
+# Iniciamos la gestion de las variable de entorno y 
+# capturamos el path de la raiz:
 env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Application definition
-
+# Definicion de las aplicaciones instaladas:
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',
@@ -20,6 +23,7 @@ INSTALLED_APPS = [
 
 ]
 
+# En este apartado, procesaremos las peticiones y respuesta HTTP:
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -31,8 +35,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'appBackClient.urls'
-
+# Esta es la definicion de como buscar y procesar las plantillas HTML:
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -49,9 +52,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'appBackClient.wsgi.application'
-ASGI_APPLICATION = 'appBackClient.asgi.application'
 
+# Validadores de las contraseñas:
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -67,7 +69,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-es'
+
+# Aqui indicamos las configuraciones de rutas y servidores:
+ROOT_URLCONF = 'appBackClient.urls'
+
+WSGI_APPLICATION = 'appBackClient.wsgi.application'
+
+ASGI_APPLICATION = 'appBackClient.asgi.application'
+
+
+# Aqui definimos configuraciones de idioma y de pais, esto nos 
+# ayuda con las conversiones:
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'Europe/Madrid'
 
@@ -77,25 +90,40 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
 
+# Aqui tenemos las rutas a archivos estaticos: 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = BASE_DIR / 'media/'
 
-##################################################
-# Seguridad con CORS para las conexiones a DJANGO:
+
+# Aqui definimos las configuraciones de CORS:
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000","http://localhost"]     #---> Mas seguridad...
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000","http://localhost"]    
+
 CORS_ALLOW_HEADERS = list(default_headers) + ["content-type",]
+
+
+# Esta verificacion es para permitir peticiones POST si 
+# la peticion viene desde otro dominio o puerto:
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000","http://localhost"]
 
+
+# Aqui tenenos las opciones de las cookies:
 SESSION_COOKIE_SAMESITE = 'None'
+
 SESSION_COOKIE_SECURE = True
 
+CSRF_COOKIE_SECURE = True
 
+# Definimos las rutas a el Slicer:
 SLIC3R_PATH = env('SLIC3R_PATH', default='/usr/bin/slic3r')
+
 SLICER_PROFILES_DIR = BASE_DIR / 'slicer_profiles'
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 

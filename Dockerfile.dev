@@ -22,10 +22,9 @@ COPY . .
 # Ejecutamos el script para la espera de la BD:
 COPY wait-for.sh entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wait-for.sh /usr/local/bin/entrypoint.sh
-
 # Entramos por script personalizado:
+EXPOSE 8000
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-EXPOSE 8000
 
-CMD ["gunicorn", "appBackClient.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2"]
+

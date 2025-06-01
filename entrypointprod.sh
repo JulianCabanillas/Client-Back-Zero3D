@@ -8,8 +8,6 @@ echo "Base de datos disponible"
 echo "Ejecutando migraciones..."
 
 # Ejecutamos migraciones en Django
-# Creamos migraciones por si hay cambios en las bd (dev):
-python manage.py makemigrations 
 # Aplicamos las migraciones pertienentes:
 python manage.py migrate --noinput
 # Creacion del superUser para Django:
@@ -22,7 +20,7 @@ python << END
 import os
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "appBackClient.settings.development")  
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "appBackClient.settings")  # Ajusta esto según tu proyecto
 django.setup()
 
 from api.models import Client
@@ -40,12 +38,19 @@ if not Client.objects.filter(username="invitado").exists():
 else:
     print("Cliente de ejemplo ya existe.")
 END
+set -e
 
+# Migrations
+python manage.py migrate --noinput --settings=$DJANGO_SETTINGS_MODULE
 
+# Recolecto estáticos sólo si la carpeta está vacía
+if [ -z "$(ls -A /app/static 2>/dev/null)" ]; then
+  echo "Collecting static files…"
+  python manage.py collectstatic --noinput --settings=$DJANGO_SETTINGS_MODULE
+fi
 
 # Aqui lanzamos para levantar el servidor que dara pie a Django:
 echo "Levantando servidor..."
 exec gunicorn appBackClient.wsgi:application \
      --bind 0.0.0.0:8000 \
-     --workers 2 \
-     --reload
+     --workers 3

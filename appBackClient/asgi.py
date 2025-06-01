@@ -11,6 +11,8 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.development')
+
+# Aqui definimos las settings que deben recoger segun el entorno:
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.staging')
 
 application = get_asgi_application()

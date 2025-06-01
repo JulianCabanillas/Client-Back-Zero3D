@@ -15,6 +15,8 @@ import tempfile
 from pathlib import Path
 
 _PRICE_METER = {"pla": 5.5, "abs": 8.8, "petg": 7.4}
+_CURA_OFFSET_MATERIAL = 2
+_CURA_OFFSET_TIME = 4.2
 
 # Metodo para calcular el precio, separado por comodidad:
 def _calculate_price(material_m, material_key, minutes):
@@ -108,6 +110,8 @@ def calculation(file_path: str, material: str, velocity: int):
                 f"(material={material_m}, tiempo={time_min}).\n"
                 f"G-code header sample:\n{header}"
             )
+        material_m = material_m * _CURA_OFFSET_MATERIAL
+        time_min = time_min * _CURA_OFFSET_TIME
 
         # Si esta todo correcto mandamos a la funcion de calcular precio:
         total_price = _calculate_price(material_m, material.lower(), time_min)
