@@ -9,7 +9,7 @@ def main():
     """Run administrative tasks."""
 
     # Aqui definimos las settings que deben recoger segun el entorno:
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.staging')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.development')
     try:
         from django.core.management import execute_from_command_line # type: ignore
     except ImportError as exc:
