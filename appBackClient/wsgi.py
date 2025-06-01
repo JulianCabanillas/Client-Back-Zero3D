@@ -12,6 +12,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 # Aqui definimos las settings que deben recoger segun el entorno:
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.staging')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.production')
 
 application = get_wsgi_application()
