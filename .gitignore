@@ -21,7 +21,7 @@ logs/
 
 # Configuraciones locales (si usas)
 .env
-.env.*
+.env.staging
 .env.local
 .env.development
 .env.test.local
