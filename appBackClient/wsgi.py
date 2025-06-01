@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 
 import os
 
-from django.core.wsgi import get_wsgi_application
+from django.core.wsgi import get_wsgi_application # type: ignore
 
 # Aqui definimos las settings que deben recoger segun el entorno:
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'appBackClient.settings.production')
