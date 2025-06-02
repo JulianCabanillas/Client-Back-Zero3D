@@ -20,6 +20,7 @@ logs/
 *.po
 
 # Configuraciones locales (si usas)
+env
 .env
 .env.staging
 .env.local

@@ -1,7 +1,7 @@
 from .base import *
 
 # Utilizamos el archivo correspondiente para las variante del entorno:
-environ.Env.read_env( BASE_DIR / '.env.development')
+environ.Env.read_env( BASE_DIR / '.env.example')
 
 # Aqui activamos la bandera para el debug (dev):
 DEBUG = True
