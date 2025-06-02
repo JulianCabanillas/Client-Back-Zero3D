@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Llama al script para realizar espera hasta la preparacion de la BD:
-./wait-for.sh db:5432
+./wait-for.sh db:5432 "Todo listo!!"
 echo "Base de datos disponible"
 
 
@@ -11,6 +11,8 @@ echo "Ejecutando migraciones..."
 
 # Aplicamos las migraciones pertienentes:
 python manage.py migrate --noinput
+
+python manage.py collectstatic --noinput --settings=appBackClient.settings.staging
 # Creacion del superUser para Django:
 python manage.py createadmin
 
@@ -40,11 +42,9 @@ else:
     print("Cliente de ejemplo ya existe.")
 END
 
-python manage.py collectstatic --noinput --settings=appBackClient.settings.staging
+
 
 # Aqui lanzamos para levantar el servidor que dara pie a Django:
 echo "Levantando servidor..."
 exec gunicorn appBackClient.wsgi:application \
-     --bind 0.0.0.0:8000 \
-     --workers 2 \
-     --reload
+     --bind 0.0.0.0:8000 

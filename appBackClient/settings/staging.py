@@ -12,17 +12,17 @@ STAGING = True
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-dev-key')
 
 # Puertos permitidos para la conexion:
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["staging.zero3d.com"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost,127.0.0.1,staging.zero3d.com"])
 
 # Defincion de la base de datos de staging:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME', default='zero3d_stage_db'),
-        'USER': env('DB_USER', default='admin'),
-        'PASSWORD': env('DB_PASSWORD', default='admin'),
-        'HOST': env('DB_HOST', default='db'),  
-        'PORT': env('DB_PORT', default='5432'),
+        'NAME': env('DATABASE_NAME', default='zero3d_stage_db'),
+        'USER': env('DATABASE_USER', default='admin'),
+        'PASSWORD': env('DATABASE_PASSWORD', default='admin'),
+        'HOST': env('DATABASE_HOST', default='db'),  
+        'PORT': env('DATABASE_PORT', default='5432'),
     }
 }
 
