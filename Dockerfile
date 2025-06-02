@@ -16,8 +16,8 @@ COPY . .
 
 ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.staging
 
-COPY wait-for.sh entrypointstage.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/wait-for.sh /usr/local/bin/entrypointstage.sh
+COPY wait-for.sh entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/wait-for.sh /usr/local/bin/entrypoint.sh
 
 FROM python:3.11-slim
 
@@ -46,4 +46,4 @@ ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.staging
 # Exponemos el puerto
 EXPOSE 8000
 # Entry point (espera DB, migraciones, etc.) y arranque Gunicorn
-ENTRYPOINT ["./entrypointstage.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
