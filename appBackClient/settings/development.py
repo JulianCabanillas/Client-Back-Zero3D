@@ -1,7 +1,6 @@
 from .base import *
 
-# Utilizamos el archivo correspondiente para las variante del entorno:
-environ.Env.read_env( BASE_DIR / '.env.example')
+
 
 # Aqui activamos la bandera para el debug (dev):
 DEBUG = True
@@ -10,7 +9,7 @@ DEBUG = True
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-dev-key')
 
 # Puertos permitidos para la conexion:
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','0.0.0.0','backend']
 
 # Defincion de la base de datos de desarrollo:
 DATABASES = {
@@ -25,4 +24,4 @@ DATABASES = {
 }
 
 # Definimos la ruta de los estaticos:
-STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+STATICFILES_DIRS = [ ]

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Llama al script para realizar espera hasta la preparacion de la BD:
-./wait-for.sh db:5432
+./wait-for.sh db:5432 -- echo "BD lista"
 echo "Base de datos disponible"
 
 
@@ -33,7 +33,7 @@ if not Client.objects.filter(username="invitado").exists():
     Client.objects.create(
         username="invitado",
         email="invitado@invitado.com",
-        password="invitado",
+        password=make_password("invitado"),
         date_register=timezone.now(),
     )
     print("Cliente de ejemplo creado.")
@@ -45,7 +45,8 @@ END
 
 # Aqui lanzamos para levantar el servidor que dara pie a Django:
 echo "Levantando servidor..."
-exec gunicorn appBackClient.wsgi:application \
-     --bind 0.0.0.0:8000 \
-     --workers 2 \
-     --reload
+#exec gunicorn appBackClient.wsgi:application \
+#     --bind 0.0.0.0:8000 \
+#     --workers 2 \
+#     --reload
+exec python manage.py runserver 0.0.0.0:8000

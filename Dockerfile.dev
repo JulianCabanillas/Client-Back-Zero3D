@@ -20,11 +20,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Ejecutamos el script para la espera de la BD:
-COPY wait-for.sh entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/wait-for.sh /usr/local/bin/entrypoint.sh
+COPY ./wait-for.sh /usr/local/bin/wait-for.sh
+RUN chmod +x /usr/local/bin/wait-for.sh
+COPY ./entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Entramos por script personalizado:
 EXPOSE 8000
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 
 
