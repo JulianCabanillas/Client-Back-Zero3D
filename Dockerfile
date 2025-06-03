@@ -41,8 +41,6 @@ COPY --from=build /usr/local/bin/ /usr/local/bin/
 # Copiamos el código y el staticfiles (generado en build)
 COPY --from=build /app /app
 
-# Definimos variables de entorno de producción
-ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.staging
 # Exponemos el puerto
 EXPOSE 8000
 # Entry point (espera DB, migraciones, etc.) y arranque Gunicorn
