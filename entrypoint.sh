@@ -12,7 +12,7 @@ echo "Ejecutando migraciones..."
 # Aplicamos las migraciones pertienentes:
 python manage.py migrate --noinput
 
-python manage.py collectstatic --noinput --settings=appBackClient.settings.staging
+python manage.py collectstatic --noinput 
 # Creacion del superUser para Django:
 python manage.py createadmin
 
