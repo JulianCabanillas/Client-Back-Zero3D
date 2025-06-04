@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.staging
+ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.production
 
 COPY wait-for.sh entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wait-for.sh /usr/local/bin/entrypoint.sh

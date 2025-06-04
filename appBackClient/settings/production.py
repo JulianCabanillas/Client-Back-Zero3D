@@ -1,24 +1,23 @@
 from .base import *
 
 # Utilizamos el archivo correspondiente para las variante del entorno:
-environ.Env.read_env( BASE_DIR / '.env.staging')
+environ.Env.read_env( BASE_DIR / '.env.production')
 
 # Aqui desactivamos la bandera para el debug (dev)
 #  y activamos la bandera de STAGING:
 DEBUG = False
-STAGING = True
 
 # Definicion de la llave:
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-dev-key')
 
 # Puertos permitidos para la conexion:
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost,127.0.0.1,staging.zero3d.com"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["zero3d.shop,www.zero3d.shop"])
 
 # Defincion de la base de datos de staging:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DATABASE_NAME', default='zero3d_stage_db'),
+        'NAME': env('DATABASE_NAME', default='zero3d_prod_db'),
         'USER': env('DATABASE_USER', default='admin'),
         'PASSWORD': env('DATABASE_PASSWORD', default='admin'),
         'HOST': env('DATABASE_HOST', default='db'),  
