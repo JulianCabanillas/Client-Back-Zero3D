@@ -1,0 +1,7 @@
+appBackClient/settings/base.py   merge=theirs
+appBackClient/settings/*         merge=ours
+appBackClient/asgi.py         merge=ours
+appBackClient/wsgi.py         merge=ours
+Dockerfile         merge=ours
+entrypoint.sh         merge=ours
+manage.py         merge=ours

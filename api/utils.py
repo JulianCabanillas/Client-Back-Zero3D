@@ -15,8 +15,8 @@ import tempfile
 from pathlib import Path
 
 _PRICE_METER = {"pla": 5.5, "abs": 8.8, "petg": 7.4}
-_CURA_OFFSET_MATERIAL = 2
-_CURA_OFFSET_TIME = 4.2
+_CURA_OFFSET_MATERIAL = 1.85
+_CURA_OFFSET_TIME = 2.75
 
 # Metodo para calcular el precio, separado por comodidad:
 def _calculate_price(material_m, material_key, minutes):

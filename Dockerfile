@@ -14,9 +14,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.production
-
-RUN python manage.py collectstatic --noinput
+ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.staging
 
 COPY wait-for.sh entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wait-for.sh /usr/local/bin/entrypoint.sh
@@ -43,8 +41,6 @@ COPY --from=build /usr/local/bin/ /usr/local/bin/
 # Copiamos el código y el staticfiles (generado en build)
 COPY --from=build /app /app
 
-# Definimos variables de entorno de producción
-ENV DJANGO_SETTINGS_MODULE=appBackClient.settings.production
 # Exponemos el puerto
 EXPOSE 8000
 # Entry point (espera DB, migraciones, etc.) y arranque Gunicorn
