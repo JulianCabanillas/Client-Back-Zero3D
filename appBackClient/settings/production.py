@@ -11,7 +11,7 @@ DEBUG = False
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-dev-key')
 
 # Puertos permitidos para la conexion:
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["zero3d.shop,www.zero3d.shop"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["zero3d.shop,www.zero3d.shop,backend,127.0.0.1,localhost"])
 
 # Defincion de la base de datos de staging:
 DATABASES = {
