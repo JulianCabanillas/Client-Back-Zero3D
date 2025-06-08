@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Llama al script para realizar espera hasta la preparacion de la BD:
-./wait-for.sh db:5432 "Todo listo!!"
+./wait-for.sh db:5432 -- echo "BD lista"
 echo "Base de datos disponible"
 
 
@@ -34,7 +34,7 @@ if not Client.objects.filter(username="invitado").exists():
     Client.objects.create(
         username="invitado",
         email="invitado@invitado.com",
-        password="invitado",
+        password=make_password("invitado"),
         date_register=timezone.now(),
     )
     print("Cliente de ejemplo creado.")

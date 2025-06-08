@@ -1,5 +1,6 @@
 from corsheaders.defaults import default_headers, default_methods 
 from pathlib import Path
+from datetime import timedelta
 import environ
 
 
@@ -69,6 +70,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# JWT para el uso de la cokies:
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+}
+
+#Tiempos que queremos mantener la validacion de dichas cokies y otros 
+# aspectos como el id cliente:
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),   # cortito
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "USER_ID_FIELD": "client_id",
+    "USER_ID_CLAIM": "client_id",
+}
 
 # Aqui indicamos las configuraciones de rutas y servidores:
 ROOT_URLCONF = 'appBackClient.urls'
