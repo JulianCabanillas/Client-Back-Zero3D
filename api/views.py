@@ -7,10 +7,11 @@ from rest_framework.parsers import MultiPartParser, FormParser # type: ignore
 from rest_framework.permissions import IsAuthenticated # type: ignore
 from django.views.decorators.csrf import csrf_exempt # type: ignore
 from .models import Client
-from .serializers import ClientSerializer
+from .serializers import ClientSerializer, OrderSerializer
 from .utils import calculator
 from datetime import timedelta
 from django.conf import settings # type: ignore
+from .models import Order
 
 
 # Vista para procesar la solicutud de login:
@@ -45,6 +46,17 @@ def logout_client(request):
     resp = Response({"message": "Bye!"}, status=200)
     clear_refresh_cookie(resp)
     return resp
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])   # permite subir fichero
+def create_order(request):
+    """Registra un pedido con STL adjunto; el técnico queda null."""
+    serializer = OrderSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(client=request.user.client)   # cliente = user logeado
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
 
 @csrf_exempt
 @api_view(['POST'])

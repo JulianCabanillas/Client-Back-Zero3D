@@ -13,5 +13,7 @@ class ClientSerializer(serializers.ModelSerializer):
 # Serializador para los datos del pedido:
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Order
-        fields = ['order_id', 'client', 'technical', 'total_euros', 'date_register']
+        model  = Order
+        fields = ["order_id", "client", "technical",
+                  "total_euros", "date_register", "stl_file"]
+        read_only_fields = ["order_id", "technical", "date_register"]
