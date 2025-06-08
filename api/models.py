@@ -28,8 +28,8 @@ class Order(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
     technical = models.ForeignKey(Technical, on_delete=models.SET_NULL, null=True, related_name='orders')
     total_euros = models.FloatField()
-    date_register = models.CharField(max_length=50)  # Puedes usar DateField si prefieres
-
+    date_register = models.DateTimeField(auto_now_add=True)          # mejor que CharField
+    stl_file      = models.FileField(upload_to="orders/%Y/%m/%d/", null=True,  blank=True,)
     def __str__(self):
         return f"Order {self.order_id}"
 
