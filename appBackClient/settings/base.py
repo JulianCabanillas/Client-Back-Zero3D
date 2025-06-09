@@ -9,8 +9,6 @@ import environ
 # capturamos el path de la raiz:
 env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL  = "/media/"
 
 # Definicion de las aplicaciones instaladas:
 INSTALLED_APPS = [
@@ -75,7 +73,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # JWT para el uso de la cokies:
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "api.authentication.ClientJWTAuthentication",
     ],
 }
 
