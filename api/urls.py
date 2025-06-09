@@ -10,4 +10,5 @@ urlpatterns = [
     path('login_client/', views.login_client, name='login_client'),
     path('calculate/', views.calculate_budget, name='calculate_budget'),
     path('token/refresh/', views.refresh_access_token),
-]
+    path("orders/", views.create_order, name="orders"),
+] 
