@@ -101,6 +101,16 @@ def register_client(request):
     return Response(serializer.errors, status=400)
 
 
+# Vista que nos devolvera la lista de pedidos realizados por un cliente, nos 
+# ayudamos del autentificador para saber el user:
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_my_orders(request):
+    orders = Order.objects.filter(client=request.user)
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+#######
 # Vista para futuras actualizaciones, lista de todos los clientes:
 @api_view(['GET'])
 def get_clients(request):
@@ -117,7 +127,7 @@ def get_client_by_id(request, pk):
         return Response(serializer.data)
     except Client.DoesNotExist:
         return Response({"error": "Cliente no encontrado"}, status=404)
-
+#######
 
 # Vista para la entrada a la calculadora, solo hago de entrada y mando la infrmacion
 # al la clase calculator para que me devuelva una respuesta de los calculos:
