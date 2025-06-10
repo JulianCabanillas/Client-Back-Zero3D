@@ -1,6 +1,6 @@
-from rest_framework.decorators import api_view, parser_classes, permission_classes # type: ignore
+from rest_framework.decorators import api_view, parser_classes, permission_classes, authentication_classes # type: ignore
 from rest_framework.response import Response  # type: ignore
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError # type: ignore
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError, JWTAuthentication # type: ignore
 from rest_framework.parsers import MultiPartParser, FormParser # type: ignore
 from rest_framework.permissions import IsAuthenticated # type: ignore
 from django.views.decorators.csrf import csrf_exempt # type: ignore
@@ -53,8 +53,10 @@ def logout_client(request):
 
 # Vista para procesar la solicitud de pedido, comprueba usuario logeado, y 
 # lo agrega para mandarlop a la base de datos
-@csrf_exempt 
+@csrf_exempt
 @api_view(['POST'])
+#@authentication_classes([JWTAuthentication])
+#@permission_classes([IsAuthenticated])
 @parser_classes([MultiPartParser, FormParser]) # Utilizamos para transformar el dataForm.  
 def create_order(request):
     # Utilizamos el serializer para convertir los que nos viene del Front y si todo es 
@@ -62,7 +64,7 @@ def create_order(request):
     serializer = OrderSerializer(data=request.data)
     if serializer.is_valid():
         # Añadimos cliente:
-        order = serializer.save(client=request.user)
+        order = serializer.save(client=Client.objects.last)
         # Si todo correcto generamos rtepuesta con el JSON y el estado 201, pedido ok:
         return Response(OrderSerializer(order).data, status=201)
     # Sino generamos error 400:
