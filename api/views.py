@@ -53,6 +53,7 @@ def logout_client(request):
 
 # Vista para procesar la solicitud de pedido, comprueba usuario logeado, y 
 # lo agrega para mandarlop a la base de datos
+@csrf_exempt 
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser]) # Utilizamos para transformar el dataForm.  
 def create_order(request):
