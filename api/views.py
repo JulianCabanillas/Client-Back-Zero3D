@@ -1,9 +1,7 @@
-from rest_framework.decorators import api_view, parser_classes, permission_classes, authentication_classes # type: ignore
+from rest_framework.decorators import api_view, parser_classes  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError  # type: ignore
-from rest_framework_simplejwt.authentication import JWTAuthentication # type: ignore
 from rest_framework.parsers import MultiPartParser, FormParser # type: ignore
-from rest_framework.permissions import IsAuthenticated # type: ignore
 from django.views.decorators.csrf import csrf_exempt # type: ignore
 from .models import Client
 from .serializers import ClientSerializer, OrderSerializer
