@@ -54,7 +54,6 @@ def logout_client(request):
 # Vista para procesar la solicitud de pedido, comprueba usuario logeado, y 
 # lo agrega para mandarlop a la base de datos
 @api_view(['POST'])
-@permission_classes([IsAuthenticated]) # Utilizamos para verificar que tenemos user logeado.
 @parser_classes([MultiPartParser, FormParser]) # Utilizamos para transformar el dataForm.  
 def create_order(request):
     # Utilizamos el serializer para convertir los que nos viene del Front y si todo es 
