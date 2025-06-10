@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view, parser_classes  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError  # type: ignore
 from rest_framework.parsers import MultiPartParser, FormParser # type: ignore
+from rest_framework_simplejwt.backends import TokenBackend # type: ignore
 from django.views.decorators.csrf import csrf_exempt # type: ignore
 from .models import Client
 from .serializers import ClientSerializer, OrderSerializer
@@ -52,27 +53,58 @@ def logout_client(request):
 
 # Vista para procesar la solicitud de pedido, comprueba usuario logeado, y 
 # lo agrega para mandarlop a la base de datos
-@csrf_exempt
-@api_view(['POST'])
+#@csrf_exempt
+#@api_view(['POST'])
 #@authentication_classes([JWTAuthentication])
 #@permission_classes([IsAuthenticated])
-@parser_classes([MultiPartParser, FormParser]) # Utilizamos para transformar el dataForm.  
-def create_order(request):
-    try:
-        client_id = request.auth.get('client_id')
-        client = Client.objects.get(pk=client_id)
-    except Client.DoesNotExist:
-        return Response({"detail": "Cliente no encontrado"}, status=404)
+#@parser_classes([MultiPartParser, FormParser]) # Utilizamos para transformar el dataForm.  
+#def create_order(request):
+    #try:
+   #     client_id = request.auth.get('client_id')
+  #      client = Client.objects.get(pk=client_id)
+ #   except Client.DoesNotExist:
+#        return Response({"detail": "Cliente no encontrado"}, status=404)
     # Utilizamos el serializer para convertir los que nos viene del Front y si todo es 
     # valido creamos la orden y le añadimos el cliente que la esta realizando:
-    serializer = OrderSerializer(data=request.data)
-    if serializer.is_valid():
-        # Añadimos cliente:
-        order = serializer.save(client=client)
-        # Si todo correcto generamos rtepuesta con el JSON y el estado 201, pedido ok:
-        return Response(OrderSerializer(order).data, status=201)
+#    serializer = OrderSerializer(data=request.data)
+    #if serializer.is_valid():
+   #     # Añadimos cliente:
+  #      order = serializer.save(client=client)
+ #       # Si todo correcto generamos rtepuesta con el JSON y el estado 201, pedido ok:
+#        return Response(OrderSerializer(order).data, status=201)
     # Sino generamos error 400:
-    return Response(serializer.errors, status=400)
+    #return Response(serializer.errors, status=400)
+
+@csrf_exempt
+@api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
+def create_order(request):
+    # 1. Extrae el Access Token de la cabecera
+    auth = request.headers.get('Authorization', '')
+    if not auth.startswith('Bearer '):
+        return Response({'detail': 'Token no proporcionado.'}, status=401)
+    raw_token = auth.split(' ', 1)[1]
+
+    # 2. Valida y decodifica el token
+    try:
+        valid_data = TokenBackend(
+            algorithm=settings.SIMPLE_JWT['ALGORITHM']
+        ).decode(raw_token, verify=True)
+    except TokenError:
+        return Response({'detail': 'Token inválido.'}, status=401)
+
+    # 3. Busca el Client real. Por defecto el claim es 'user_id'
+    client = Client.objects.filter(pk=valid_data.get('user_id')).first()
+    if not client:
+        return Response({'detail': 'Cliente no encontrado.'}, status=404)
+
+    # 4. Procesa el pedido
+    serializer = OrderSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=400)
+
+    order = serializer.save(client=client)
+    return Response(OrderSerializer(order).data, status=201)
 
 # Vista para el refresco y renuevo del acceso del usuario:
 @csrf_exempt

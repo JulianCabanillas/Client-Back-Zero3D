@@ -120,14 +120,14 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # Aqui definimos las configuraciones de CORS:
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000","http://localhost"]    
+CORS_ALLOWED_ORIGINS = ["https://www.zero3d.shop","https://zero3d.shop"]    
 
 CORS_ALLOW_HEADERS = list(default_headers) + ["content-type",]
 
 
 # Esta verificacion es para permitir peticiones POST si 
 # la peticion viene desde otro dominio o puerto:
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000","http://localhost"]
+CSRF_TRUSTED_ORIGINS = ["https://www.zero3d.shop","https://zero3d.shop",]
 
 
 # Aqui tenenos las opciones de las cookies:
@@ -135,7 +135,6 @@ SESSION_COOKIE_SAMESITE = 'None'
 
 SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SECURE = True
 
 # Definimos las rutas a el Slicer:
 SLIC3R_PATH = env('SLIC3R_PATH', default='/usr/bin/slic3r')
