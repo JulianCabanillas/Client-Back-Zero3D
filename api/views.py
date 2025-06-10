@@ -58,12 +58,17 @@ def logout_client(request):
 #@permission_classes([IsAuthenticated])
 @parser_classes([MultiPartParser, FormParser]) # Utilizamos para transformar el dataForm.  
 def create_order(request):
+    try:
+        client_id = request.auth.get('client_id')
+        client = Client.objects.get(pk=client_id)
+    except Client.DoesNotExist:
+        return Response({"detail": "Cliente no encontrado"}, status=404)
     # Utilizamos el serializer para convertir los que nos viene del Front y si todo es 
     # valido creamos la orden y le añadimos el cliente que la esta realizando:
     serializer = OrderSerializer(data=request.data)
     if serializer.is_valid():
         # Añadimos cliente:
-        order = serializer.save(client=Client.objects.last)
+        order = serializer.save(client=client)
         # Si todo correcto generamos rtepuesta con el JSON y el estado 201, pedido ok:
         return Response(OrderSerializer(order).data, status=201)
     # Sino generamos error 400:
