@@ -10,4 +10,5 @@ urlpatterns = [
     path('calculate/', views.calculate_budget, name='calculate_budget'),
     path('token/refresh/', views.refresh_access_token),
     path("orders/", views.create_order, name="orders"),
+    path('my-orders/', views.get_my_orders, name='my-orders'),
 ] 
