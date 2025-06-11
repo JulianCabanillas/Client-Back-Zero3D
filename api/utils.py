@@ -77,22 +77,28 @@ def calculator(request):
 # Metodo que hara cortado del archivo y calculara el precio:
 def calculation(file_path: str, material: str, velocity: int):
 
+    # Llamamos al slicer para hacer los calculos:
     slic3r = os.getenv("SLIC3R_PATH", "/usr/bin/slic3r")
+    # Seleccionamos un perfil, podemos incluir uno propio:
     profile = Path.cwd() / "slicer_profiles" / "slic3r_default.ini"
+    # Arrojamos error si no encuentra el archivo:
     if not profile.is_file():
         raise FileNotFoundError(f"Perfil de Slic3r no encontrado: {profile}")
 
+    
     with tempfile.NamedTemporaryFile(delete=False, suffix=".gcode") as tmp:
+        # Variable que mantiene el archivo generado del corte:
         gcode_path = tmp.name
 
         # Aqui preparamos la llamada al slicer
         cmd = [
             slic3r,
             "--output", gcode_path,
-            "--gcode-comments",                # vuelca "filament used" y "print time"
+            "--gcode-comments",                # En estos comentarios
             "--load", str(profile),
             str(file_path),
         ]
+        # Y aqui ejecutamos el proceso con todo preparado:
         try:
             proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
         except subprocess.CalledProcessError as exc:
@@ -101,7 +107,7 @@ def calculation(file_path: str, material: str, velocity: int):
         # Esperamos a una salida y parseamos para el calculo:
         material_m, time_min = _gcode(gcode_path, velocity)
         
-        # Comprobamos que esten los datos fuera de nulo:
+        # Comprobamos que esten los datos fuera del nulo:
         if material_m is None or time_min is None:
             with open(gcode_path, encoding="utf-8", errors="ignore") as fh:
                 header = "".join(fh.readline() for _ in range(10))
@@ -110,12 +116,14 @@ def calculation(file_path: str, material: str, velocity: int):
                 f"(material={material_m}, tiempo={time_min}).\n"
                 f"G-code header sample:\n{header}"
             )
+        # Aplicamos variaciones de Slic3r y CURA:
         material_m = material_m * _CURA_OFFSET_MATERIAL
         time_min = time_min * _CURA_OFFSET_TIME
 
         # Si esta todo correcto mandamos a la funcion de calcular precio:
         total_price = _calculate_price(material_m, material.lower(), time_min)
         
+        # Y devolvemos los datos:
         return {
             "time": time_min,
             "material_required": material_m,
